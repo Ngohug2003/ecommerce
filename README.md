@@ -9,53 +9,70 @@
 
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Hướng dẫn cài đặt
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Yêu cầu hệ thống
+- PHP >= 8.2
+- Composer
+- Node.js & npm
 
-## Learning Laravel
+### Các bước cài đặt
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone dự án & cài đặt các package PHP:**
+   ```bash
+   composer install
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Cài đặt các package Node.js:**
+   ```bash
+   npm install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Tạo file môi trường:**
+   ```bash
+   cp .env.example .env
+   ```
+   Sau đó chỉnh sửa các thông số kết nối database trong file `.env`.
 
-## Laravel Sponsors
+4. **Tạo key ứng dụng & migrate database:**
+   ```bash
+   php artisan key:generate
+   php artisan migrate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. **Chạy server:**
+   - Chạy backend Laravel:
+     ```bash
+     php artisan serve
+     ```
+   - Chạy frontend (Vite):
+     ```bash
+     npm run dev
+     ```
+   - Hoặc chạy đồng thời cả hai:
+     ```bash
+     composer run dev
+     ```
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Các chức năng chính
 
-## Contributing
+### Người dùng
+- Đăng ký, đăng nhập, đăng xuất
+- Xem danh sách sản phẩm
+- Thêm sản phẩm vào giỏ hàng
+- Xem giỏ hàng
+- Đặt hàng và xem lịch sử đơn hàng
+- Xem thông tin cá nhân 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Quản trị viên (Admin)
+- Quản lý sản phẩm
+- Quản lý đơn hàng
+- Quản lý người dùng
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Phân quyền
+- Người dùng thông thường chỉ có thể truy cập các chức năng cơ bản như xem sản phẩm, giỏ hàng, đặt hàng và quản lý thông tin cá nhân.
+- Người dùng có quyền admin (is_admin = 1) có thể truy cập vào trang quản trị để quản lý sản phẩm, đơn hàng và người dùng.
+- Nếu người dùng không có quyền admin cố gắng truy cập vào trang quản trị, họ sẽ bị chuyển hướng về trang sản phẩm với thông báo lỗi.
