@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use App\Models\Order;
@@ -17,7 +18,12 @@ class Cart extends Component
     {
         $this->cart = session()->get('cart', []);
     }
-
+    public function removeFromCart($productId)
+    {
+        unset($this->cart[$productId]);
+        session()->put('cart', $this->cart);
+        session()->flash('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
+    }
     public function updateQuantity($productId, $quantity)
     {
         if ($quantity <= 0) {
@@ -26,7 +32,7 @@ class Cart extends Component
         }
 
         $product = Product::findOrFail($productId);
-        
+
         if (!$product->isInStock($quantity)) {
             session()->flash('error', 'Số lượng vượt quá tồn kho!');
             return;
@@ -36,12 +42,7 @@ class Cart extends Component
         session()->put('cart', $this->cart);
     }
 
-    public function removeFromCart($productId)
-    {
-        unset($this->cart[$productId]);
-        session()->put('cart', $this->cart);
-        session()->flash('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
-    }
+
 
     public function checkout()
     {
@@ -75,7 +76,7 @@ class Cart extends Component
             // Tạo order items và giảm stock
             foreach ($this->cart as $productId => $item) {
                 $product = Product::findOrFail($productId);
-                
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $productId,
@@ -94,7 +95,6 @@ class Cart extends Component
 
             session()->flash('success', 'Đặt hàng thành công!');
             return redirect()->route('orders.index');
-
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', $e->getMessage());

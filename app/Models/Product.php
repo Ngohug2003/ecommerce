@@ -41,10 +41,10 @@ class Product extends Model
         return $query->where('is_active', true);
     }
 
-    public function scopeInStock($query)
-    {
-        return $query->where('stock_quantity', '>', 0);
-    }
+    // public function scopeInStock($query)
+    // {
+    //     return $query->where('stock_quantity', '>', 50);
+    // }
 
     public function isInStock($quantity = 1)
     {
